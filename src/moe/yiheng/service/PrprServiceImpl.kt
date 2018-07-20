@@ -19,4 +19,8 @@ class PrprServiceImpl:PrprService {
         dao.update(prpr)
 
     }
+
+    override fun sortByPrprStat (chatId: Long): List<Prpr> {
+        return dao.sortByPrprStat(chatId)
+    }
 }

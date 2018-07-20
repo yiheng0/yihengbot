@@ -138,5 +138,5 @@ class MyBot : TelegramLongPollingBot() {
 
     override fun getBotUsername(): String = "yihengbot"
 
-    override fun getBotToken(): String = "*************************************"
+    override fun getBotToken(): String = "513667858:AAGT_wJN_mtTRV17F8WMKc6FIBhx5jcox3c"
 }

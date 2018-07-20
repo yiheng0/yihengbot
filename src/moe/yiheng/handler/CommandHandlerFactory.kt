@@ -6,7 +6,7 @@ import java.util.regex.Pattern
 class CommandHandlerFactory {
     companion object {
         fun createCommandHandle(msg:Message): CommandHandler {
-            if (contains(msg.text,"/[a-zA-Z0-9]+@[a-zA-Z0-9_]+")) {
+            if (contains(msg.text,"/[a-zA-Z0-9_]+@[a-zA-Z0-9_]+")) {
                 return CommandHandlerWithAt(msg)
             } else if (contains(msg.text,"/[a-zA-Z0-9_]+")){
                 return CommandHandlerWithoutAt(msg)

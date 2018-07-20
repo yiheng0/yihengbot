@@ -28,21 +28,41 @@ fun prpr(username: String, chatId: Long) {
 }
 
 fun prprstat(parameters: List<String>, msg: Message): String? {
-    return if (parameters.isEmpty()) {
+    return if (parameters.isEmpty() && msg.replyToMessage == null) {
         val prpr = prprService.findByUsernameAndChatId(msg.from.userName.toLowerCase(), msg.chatId)
         if (prpr == null) {
             generateUserLink(msg) + " 还没有被prpr过呢,立即 /prpr@" + msg.from.userName
         } else {
             "${generateUserLink(msg)} 在这个群组中被prpr了 ${prpr.prprstat} 次 立即 /prpr@${msg.from.userName}"
         }
-    } else {
+    } else if (!parameters.isEmpty()) {
         val prpr = prprService.findByUsernameAndChatId(parameters[0], msg.chatId)
         if (prpr == null) {
             """@${parameters[0]} 还没有被prpr过呢,立即 /prpr@${parameters[0]}"""
         } else {
             """@${parameters[0]} 在这个群组中被prpr了${prpr.prprstat}次 立即 /prpr@${parameters[0]}"""
         }
+    } else if (parameters.isEmpty() && msg.replyToMessage != null) {
+        val prpr = prprService.findByUsernameAndChatId(msg.replyToMessage.from.userName, msg.chatId)
+        if (prpr == null) {
+            """${generateUserLink(msg.replyToMessage)} 还没有被prpr过呢,立即 /prpr@${msg.replyToMessage.from.userName}"""
+        } else {
+            """${generateUserLink(msg.replyToMessage)} 在这个群组中被prpr了${prpr.prprstat}次 立即 /prpr@${msg.replyToMessage.from.userName}"""
+        }
+    } else {
+        null
     }
+}
+
+fun prtop(chatId: Long): String {
+    val list = prprService.sortByPrprStat(chatId)
+    if (list.isEmpty()) return "坏耶,没有查询到数据呢"
+    val result = StringBuilder("此群prpr数量统计:\n")
+    list.forEach {
+        result.append("@${it.username}:被prpr${it.prprstat}次\n")
+    }
+    result.append("恭喜 @${list[0].username} 成为最受欢迎的RBQ")
+    return result.toString()
 }
 
 fun generateUserLink(username: String, firstName: String, lastName: String): String {

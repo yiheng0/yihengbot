@@ -19,7 +19,7 @@ class CommandHandlerWithoutAt(private val msg: Message) : CommandHandler {
     private val chatService: ChatService = ChatServiceImpl()
 
     override fun getCommand(): String {
-        val regex = "/([a-zA-z0-9]+)"
+        val regex = "/([a-zA-z0-9_]+)"
         val matcher = Pattern.compile(regex).matcher(msg.text)
 
         if (matcher.find()) {
