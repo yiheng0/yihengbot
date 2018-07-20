@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="moe.yiheng.domain">
+    <class name="Prpr" table="prpr">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="username" column="username"/>
+        <property name="chatId" column="chat_id"/>
+        <property name="prprstat" column="prpr_stat"/>
+    </class>
+</hibernate-mapping>
